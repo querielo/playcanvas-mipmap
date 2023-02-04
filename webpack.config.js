@@ -16,10 +16,11 @@ const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
     entry: {
-        "components-from-git": "./src/index.ts",
+        "mipmap": "./src/index.ts",
+        "utils": "./src/utils.ts",
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "dist/Scripts"),
     },
     devServer: {
         open: true,
