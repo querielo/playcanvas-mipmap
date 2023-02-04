@@ -12,12 +12,6 @@ Playcanvas project: https://playcanvas.com/project/1035726/overview/debug-mipmap
 
 The repo is based on the [Playcanvas TypeScript Template](https://github.com/querielo/playcanvas-typescript-template). I highly recommend you to check it out. Read more about usage of Playcanvas Overdraw in the Playcanvas TypeScript Template.
 
-## Features
-
-Visualizes the mipmap level of a texture by changing the color of a designated visual element (e.g. a cube or sphere)
-Uses a pre-defined color mapping object to associate mipmap levels with specific RGB values
-Updates the visual representation in real-time as the mipmap level changes.
-
 ## Usage
 
 The repo contains the next Typescript ScriptComponents for [Playcanvas](https://playcanvas.com/):
