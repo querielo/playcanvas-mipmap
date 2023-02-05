@@ -1,11 +1,15 @@
 class Mipmap extends pc.ScriptType {
     private isActive = false;
 
-    private materials = new Map<pc.StandardMaterial, [pc.Texture, pc.Texture]>();
+    private materials = new Map<
+        pc.StandardMaterial,
+        [pc.Texture, pc.Texture]
+    >();
     private processingMaterials = new Set<pc.StandardMaterial>();
 
     public initialize() {
-        const material = this.entity.render?.material || this.entity.model?.material;
+        const material =
+            this.entity.render?.material || this.entity.model?.material;
         if (material instanceof pc.StandardMaterial) {
             this.processingMaterials.add(material);
         }
@@ -35,9 +39,14 @@ class Mipmap extends pc.ScriptType {
                 }
 
                 const addMeshInstances = layer.addMeshInstances.bind(layer);
-                layer.addMeshInstances = (meshInstances: pc.MeshInstance[], skipShadowCasters?: boolean) => {
+                layer.addMeshInstances = (
+                    meshInstances: pc.MeshInstance[],
+                    skipShadowCasters?: boolean
+                ) => {
                     for (const meshInstance of meshInstances) {
-                        if (meshInstance.material instanceof pc.StandardMaterial) {
+                        if (
+                            meshInstance.material instanceof pc.StandardMaterial
+                        ) {
                             this.processingMaterials.add(meshInstance.material);
                         }
                     }
@@ -45,12 +54,20 @@ class Mipmap extends pc.ScriptType {
                     addMeshInstances(meshInstances, skipShadowCasters);
                 };
 
-                const removeMeshInstances = layer.removeMeshInstances.bind(layer);
+                const removeMeshInstances =
+                    layer.removeMeshInstances.bind(layer);
 
-                layer.removeMeshInstances = (meshInstances: pc.MeshInstance[], skipShadowCasters?: boolean) => {
+                layer.removeMeshInstances = (
+                    meshInstances: pc.MeshInstance[],
+                    skipShadowCasters?: boolean
+                ) => {
                     for (const meshInstance of meshInstances) {
-                        if (meshInstance.material instanceof pc.StandardMaterial) {
-                            this.processingMaterials.delete(meshInstance.material);
+                        if (
+                            meshInstance.material instanceof pc.StandardMaterial
+                        ) {
+                            this.processingMaterials.delete(
+                                meshInstance.material
+                            );
                         }
                     }
 
@@ -60,7 +77,7 @@ class Mipmap extends pc.ScriptType {
         }
     }
 
-    public update(dt: number): void {
+    public update(): void {
         this.processMaterials();
 
         const isActive = this.app.keyboard.isPressed(pc.KEY_B);
@@ -68,8 +85,13 @@ class Mipmap extends pc.ScriptType {
         if (this.isActive !== isActive) {
             this.isActive = isActive;
 
-            for (const [material, [oldDiffuseTexture, newDiffuseTexture]] of this.materials.entries()) {
-                material.diffuseMap = this.isActive ? newDiffuseTexture : oldDiffuseTexture;
+            for (const [
+                material,
+                [oldDiffuseTexture, newDiffuseTexture],
+            ] of this.materials.entries()) {
+                material.diffuseMap = this.isActive
+                    ? newDiffuseTexture
+                    : oldDiffuseTexture;
                 material.update();
             }
         }
@@ -91,9 +113,15 @@ class Mipmap extends pc.ScriptType {
                 const width = oldDiffuseTexture.width;
                 const height = oldDiffuseTexture.height;
 
-                const newDiffuseTexture = this.generateMipmapTexture(width, height);
+                const newDiffuseTexture = this.generateMipmapTexture(
+                    width,
+                    height
+                );
 
-                this.materials.set(material, [oldDiffuseTexture, newDiffuseTexture]);
+                this.materials.set(material, [
+                    oldDiffuseTexture,
+                    newDiffuseTexture,
+                ]);
             }
 
             this.processingMaterials.delete(material);
@@ -130,7 +158,7 @@ class Mipmap extends pc.ScriptType {
 
             const levels = [];
 
-            for (var i = 0; i < Math.log2(Math.max(width, height)); i++) {
+            for (let i = 0; i < Math.log2(Math.max(width, height)); i++) {
                 const levelWidth = width >> i;
                 const levelHeight = height >> i;
 
@@ -139,7 +167,7 @@ class Mipmap extends pc.ScriptType {
 
                 const color = colors[i % colors.length];
 
-                for (var j = 0; j < levelWidth * levelHeight; j++) {
+                for (let j = 0; j < levelWidth * levelHeight; j++) {
                     data[j * 3 + 0] = color[0];
                     data[j * 3 + 1] = color[1];
                     data[j * 3 + 2] = color[2];

@@ -4,7 +4,8 @@ module.exports = {
     'es2021': true,
   },
   'extends': [
-    'google',
+    "eslint:recommended",
+    "plugin:prettier/recommended",
   ],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
@@ -15,5 +16,6 @@ module.exports = {
     '@typescript-eslint',
   ],
   'rules': {
+    "no-undef": "off",
   },
 };

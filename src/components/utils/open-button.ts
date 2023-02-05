@@ -2,7 +2,7 @@ class OpenButton extends pc.ScriptType {
     public link = "https://github.com/querielo/playcanvas-mipmap";
 
     public initialize() {
-        this.entity.button?.on("click", (event) => {
+        this.entity.button?.on("click", () => {
             window.open(this.link);
         });
     }
